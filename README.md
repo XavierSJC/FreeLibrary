@@ -18,14 +18,6 @@ docker run -d --name freelibrary -p 80:80 powersjk/freelibrary:helloworld
 After the application starts, navigate to `http://localhost` in your web browser.
 
 ## Tags Available
-* [`helloworld`](): Image running the react code 'Hello world' from dotnet.
+* [`helloworld`](https://github.com/XavierSJC/FreeLibrary/tree/e7eee1267ec5201bee11093e743a7c3780ab215d): Image running the react code 'Hello world' from dotnet.
 
 This image hasn't the tag `latest` available.
-
-## Build the image
-To build this image type these commands:
-```
-git clone https://github.com/XavierSJC/FreeLibrary.git
-cd FreeLibrary
-docker build -t freelibrary:helloworld -f .\docker\dockerfile .
-```
