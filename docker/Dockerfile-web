@@ -2,7 +2,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
 # Add to image to organize images by project
-LABEL freelibrary.version="Hello World"
+LABEL freelibrary.web.version="Hello World"
 LABEL maintainer="PowerSJK"
 
 # React dependencies
