@@ -44,9 +44,9 @@ namespace Freelibrary.Webapi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Freelibrary.Webapi", Version = "v1" });
             });
 
-            //var connection = "server=localhost;database=library;user=lib;password=Service01";
-            var connection = Configuration["MySqlConnection:MySqlConnectionString"];
-            services.AddDbContext<BookContext>(opt => opt.UseMySql(connection, ServerVersion.AutoDetect(connection)));
+            var envVariables = Environment.GetEnvironmentVariables();
+            var stringConnection = $"Server={envVariables["DB_SERVER"]};DataBase={envVariables["DB_DATABASE"]};Uid={envVariables["DB_USER"]};Pwd={envVariables["DB_USER_PWD"]}";
+            services.AddDbContext<BookContext>(opt => opt.UseMySql(stringConnection, ServerVersion.AutoDetect(stringConnection)));
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
