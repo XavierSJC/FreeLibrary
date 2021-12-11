@@ -1,0 +1,29 @@
+# This instruction does the download of Base Image
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+
+# Add to image to organize images by project
+LABEL freelibrary.api.version="0.0.1"
+LABEL maintainer="PowerSJK"
+
+# Copy source code
+COPY ../Webapi/ /home/freeLibrary
+
+WORKDIR /home/freeLibrary
+
+RUN dotnet restore
+# RUN dotnet build
+RUN dotnet publish -c release -o /app --no-restore
+
+# final stage/image
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
+
+ENV DB_SERVER db_server
+ENV DB_DATABASE Freelibrary
+ENV DB_USER main_user
+ENV DB_USER_PWD root_password_secret
+
+WORKDIR /app
+COPY --from=build /app .
+
+EXPOSE 80
+ENTRYPOINT ["dotnet", "Freelibrary.Webapi.dll"]
