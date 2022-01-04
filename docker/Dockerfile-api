@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 
 # Add to image to organize images by project
 LABEL freelibrary.api.version="0.0.1"
-LABEL maintainer="PowerSJK"
+LABEL freelibrary.author="XavierSJC"
 
 # Copy source code
 COPY ../Webapi/ /home/freeLibrary
