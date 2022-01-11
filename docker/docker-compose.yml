@@ -1,0 +1,39 @@
+version: '2.1'
+
+services:
+  freelibrary_mysql:
+    image: mysql:latest
+    volumes:
+      - freeLibrary-volume:/var/lib/mysql
+    environment:
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    networks:
+      - freeLibrary-network
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  api:
+    image: powersjk/freelibrary-api:0.0.1
+    environment:
+      DB_SERVER: freelibrary_mysql
+      DB_DATABASE: Freelibrary
+      DB_USER: root
+      DB_USER_PWD: ${MYSQL_ROOT_PASSWORD}
+    networks:
+      - freeLibrary-network
+    ports:
+      - "80:80"
+    depends_on: 
+      freelibrary_mysql:
+        condition: service_healthy
+
+volumes:
+  freeLibrary-volume: {}
+
+networks:
+  freeLibrary-network:
+    driver: bridge
